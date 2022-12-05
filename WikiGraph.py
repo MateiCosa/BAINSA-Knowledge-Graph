@@ -220,7 +220,9 @@ class WikiGraph(object):
             src_node = self.article_id[src_node]
         if dest_node in self.article_id:
             dest_node = self.article_id[dest_node]
-        if dest_node in self.G[src_node]:
+        if src_node == dest_node:
+            weight = 0.0
+        elif dest_node in self.G[src_node]:
             weight = 1.0
         else:
             weight = np.inf
