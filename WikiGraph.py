@@ -228,8 +228,49 @@ class WikiGraph(object):
             weight = np.inf
         
         return weight
-        
-        
+    
+    def dijkstra(self, src_node, dest_node):
+        """
+        Parameters
+        ----------
+        src_node : string
+            Source node of the edge: either id or title;
+        dest_node : string
+            Destination node of the edge.
+        Takes two string: id or title of source and destination nodes: either id or title;
+        Returns
+        -------
+        weight : float
+            A float representing the weight of the path from src_node to dest_node
+            It is either a finite positive integer or -1 if there is no path between the 2 nodes.
+        """
+        if not isinstance(src_node, str) or not isinstance(dest_node, str):
+            raise Exception("The two nodes must be both strings!")
+        if not self.__contains__(src_node) or not self.__contains__(dest_node):
+            raise Exception("The two nodes must belong to the graph!")
+
+        distances = {vertex: np.inf for vertex in self.G}
+        distances[src_node] = 0
+        dest_node = self.article_id[dest_node]
+        src_node = self.article_id[src_node]
+
+        pq = [(0, src_node)]
+        while len(pq) > 0:
+            current_distance, current_vertex = heapq.heappop(pq)
+
+            if current_distance > distances[current_vertex]:
+                continue
+
+            for neighbour in self.__getitem__(src_node):
+                distance = current_distance + self.get_weight(src_node, neighbour)
+
+                if distance < distances[neighbour]:
+                    distances[neighbour] = distance
+                    heapq.heappush(pq, (distance,neighbour))
+
+                if dest_node == neighbour or dest_node == self.article_id[neighbour]:
+                    return distance
+        return -1        
         
         
         
