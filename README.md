@@ -13,5 +13,5 @@ and the topology of the graph.
 
 <h3> Contents </h3>
 
-The notebooks and scripts containted in this repo deal with processing and cleaning data from the Wiki dumps. Our implementation of the general graph class and Dijsktra's algorithm are also included. Updates on our current work are coming soon!
+The notebooks and scripts containted in this repo deal with processing and cleaning data from the Wiki dumps. Our implementation of the general graph class and Dijkstra's algorithm are also included. Updates on our current work are coming soon!
 
